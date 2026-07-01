@@ -1,0 +1,56 @@
+/* ─── Haji Cosmétique – Design Tokens ─── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap');
+
+:root {
+  --cream       : #FAF7F2;
+  --blush       : #F2DDD5;
+  --rose        : #C8836A;
+  --rose-dark   : #A3634C;
+  --forest      : #2E5E3E;
+  --forest-light: #3D7A52;
+  --gold        : #C9A86C;
+  --charcoal    : #2A2A2A;
+  --mid         : #666;
+  --light       : #999;
+  --white       : #fff;
+  --card-bg     : #FFFCF8;
+  --border      : #E8E2DA;
+
+  --shadow      : 0 4px 24px rgba(0,0,0,.08);
+  --shadow-lg   : 0 12px 48px rgba(0,0,0,.14);
+  --radius      : 16px;
+  --radius-sm   : 10px;
+  --radius-pill : 50px;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body   : 'Inter', system-ui, sans-serif;
+  --font-ar     : 'Amiri', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background  : var(--cream);
+  color       : var(--charcoal);
+  min-height  : 100vh;
+  overflow-x  : hidden;
+}
+
+[dir="rtl"] body,
+[dir="rtl"] { font-family: var(--font-ar); }
+
+html { scroll-behavior: smooth; }
+
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+img { max-width: 100%; display: block; }
+
+/* ── Global reset additions ── */
+html { overflow-x: hidden; }
+body { overflow-x: hidden; }
+img, video, iframe { max-width: 100%; }
+* { -webkit-tap-highlight-color: transparent; }
+
+/* ── Touch-friendly minimum tap targets ── */
+button, a { min-height: 36px; }
