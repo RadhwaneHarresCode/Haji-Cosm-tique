@@ -371,10 +371,7 @@ app.delete('/api/admin/videos/:id', authMiddleware, async (req, res) => {
 
 // ── Démarrage ──────────────────────────────────────────────────────────────────
 app.listen(PORT, () => console.log(`✅  Haji Cosmétique API → http://localhost:${PORT}`));
-const mysql = require('mysql2/promise');
-
-// احذف السطر الذي يحتوي على const mysql = require... واكتب هذا مباشرة:
-
+//MySQL check situation 
 pool.getConnection()
   .then(connection => {
     console.log("✅✅✅ Connected to TiDB MySQL successfully! ✅✅✅");
