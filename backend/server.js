@@ -34,14 +34,17 @@ app.use(express.json({ limit: '5mb' }));
 app.get('/api/health', (req, res) => res.json({ status:'ok', app:'Haji Cosmetique API' }));
 app.get('/api/admin/login', (req, res) => res.status(200).json({ info:'POST to this endpoint with {username,password}' }));
 
-// ── MySQL Pool ─────────────────────────────────────────────────────────────────
+// ── MySQL Pool (TiDB compatible) ──────────────────────────
 const pool = mysql.createPool({
-  host    : process.env.DB_HOST     || 'localhost',
-  user    : process.env.DB_USER     || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME     || 'haji_db',
+  host    : process.env.DB_HOST,
+  port    : parseInt(process.env.DB_PORT) || 4000,   // TiDB = 4000 ليس 3306
+  user    : process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl     : { rejectUnauthorized: false },           // مطلوب لـ TiDB Cloud
   waitForConnections: true,
   connectionLimit   : 10,
+  connectTimeout    : 30000,
 });
 
 // ── Nodemailer ─────────────────────────────────────────────────────────────────
