@@ -373,15 +373,8 @@ app.delete('/api/admin/videos/:id', authMiddleware, async (req, res) => {
 app.listen(PORT, () => console.log(`✅  Haji Cosmétique API → http://localhost:${PORT}`));
 const mysql = require('mysql2/promise');
 
-// إنشاء الاتصال باستخدام المتغيرات التي وضعناها في Render
-const pool = mysql.createPool({
-  uri: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: true // إجباري لـ TiDB Cloud
-  }
-});
+// احذف السطر الذي يحتوي على const mysql = require... واكتب هذا مباشرة:
 
-// هذا الكود سيؤكد لنا في الـ Logs هل تم الاتصال أم لا
 pool.getConnection()
   .then(connection => {
     console.log("✅✅✅ Connected to TiDB MySQL successfully! ✅✅✅");
@@ -390,5 +383,3 @@ pool.getConnection()
   .catch(err => {
     console.error("❌❌❌ Database connection failed! Error:", err.message);
   });
-
-module.exports = pool; // أو حسب تصدير الملف لديك
