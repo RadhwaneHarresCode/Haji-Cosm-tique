@@ -187,29 +187,6 @@ app.post('/api/orders', async (req, res) => {
       });
     }
 
-    // Email de confirmation au client
-    if (email) {
-      await transporter.sendMail({
-        from   : `"Haji Cosmétique" <${process.env.SMTP_USER}>`,
-        to     : email,
-        subject: `✅ Commande confirmée #${orderId} – Haji Cosmétique`,
-        html   : `<div style="font-family:sans-serif;max-width:500px;margin:auto;text-align:center;padding:30px">
-          <h2 style="color:#2d5a27">Merci ${name} !</h2>
-          <p>Votre commande <strong>#${orderId}</strong> a bien été reçue.</p>
-          <p>Total : <strong>${total} TND</strong></p>
-          <p>Nous vous contacterons au <strong>${phone}</strong> pour confirmer la livraison.</p>
-          <p style="color:#999;font-size:.85rem;margin-top:20px">Haji Cosmétique – Sfax, Tunisie</p>
-        </div>`,
-      });
-    }
-
-    res.status(201).json({ message: 'Commande créée.', orderId, total });
-  } catch (err) {
-    console.error('Erreur /api/orders :', err);
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
-
 // POST /api/newsletter
 app.post('/api/newsletter', async (req, res) => {
   const { email } = req.body;
