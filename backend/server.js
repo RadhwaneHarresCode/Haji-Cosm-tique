@@ -21,7 +21,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'haji_secret_2025';
 // CORS: accept all in dev, restrict in production
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production'
-    ? (process.env.FRONTEND_URL || 'https://haji-cosm-tique.vercel.app')
+    ? (process.env.FRONTEND_URL || 'http://localhost:3000')
     : '*',
   methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization'],
@@ -34,17 +34,14 @@ app.use(express.json({ limit: '5mb' }));
 app.get('/api/health', (req, res) => res.json({ status:'ok', app:'Haji Cosmetique API' }));
 app.get('/api/admin/login', (req, res) => res.status(200).json({ info:'POST to this endpoint with {username,password}' }));
 
-// ── MySQL Pool (TiDB compatible) ──────────────────────────
+// ── MySQL Pool ─────────────────────────────────────────────────────────────────
 const pool = mysql.createPool({
-  host    : process.env.DB_HOST,
-  port    : parseInt(process.env.DB_PORT) || 4000,   // TiDB = 4000 ليس 3306
-  user    : process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  ssl     : { rejectUnauthorized: false },           // مطلوب لـ TiDB Cloud
+  host    : process.env.DB_HOST     || 'localhost',
+  user    : process.env.DB_USER     || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME     || 'haji_db',
   waitForConnections: true,
   connectionLimit   : 10,
-  connectTimeout    : 30000,
 });
 
 // ── Nodemailer ─────────────────────────────────────────────────────────────────
@@ -186,6 +183,29 @@ app.post('/api/orders', async (req, res) => {
           </div>`,
       });
     }
+
+    // Email de confirmation au client
+    if (email) {
+      await transporter.sendMail({
+        from   : `"Haji Cosmétique" <${process.env.SMTP_USER}>`,
+        to     : email,
+        subject: `✅ Commande confirmée #${orderId} – Haji Cosmétique`,
+        html   : `<div style="font-family:sans-serif;max-width:500px;margin:auto;text-align:center;padding:30px">
+          <h2 style="color:#2d5a27">Merci ${name} !</h2>
+          <p>Votre commande <strong>#${orderId}</strong> a bien été reçue.</p>
+          <p>Total : <strong>${total} TND</strong></p>
+          <p>Nous vous contacterons au <strong>${phone}</strong> pour confirmer la livraison.</p>
+          <p style="color:#999;font-size:.85rem;margin-top:20px">Haji Cosmétique – Sfax, Tunisie</p>
+        </div>`,
+      });
+    }
+
+    res.status(201).json({ message: 'Commande créée.', orderId, total });
+  } catch (err) {
+    console.error('Erreur /api/orders :', err);
+    res.status(500).json({ error: 'Erreur serveur.' });
+  }
+});
 
 // POST /api/newsletter
 app.post('/api/newsletter', async (req, res) => {
@@ -348,15 +368,6 @@ app.delete('/api/admin/videos/:id', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
-// ── MySQL connection check ─────────────────────────────────
-pool.getConnection()
-  .then(connection => {
-    console.log("✅✅✅ Connected to TiDB MySQL successfully! ✅✅✅");
-    connection.release();
-  })
-  .catch(err => {
-    console.error("❌❌❌ Database connection failed! Error:", err.message);
-  });
 
-// ── Démarrage ──────────────────────────────────────────────
+// ── Démarrage ──────────────────────────────────────────────────────────────────
 app.listen(PORT, () => console.log(`✅  Haji Cosmétique API → http://localhost:${PORT}`));
