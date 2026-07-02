@@ -371,10 +371,7 @@ app.delete('/api/admin/videos/:id', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
-
-// ── Démarrage ──────────────────────────────────────────────────────────────────
-app.listen(PORT, () => console.log(`✅  Haji Cosmétique API → http://localhost:${PORT}`));
-//MySQL check situation 
+// ── MySQL connection check ─────────────────────────────────
 pool.getConnection()
   .then(connection => {
     console.log("✅✅✅ Connected to TiDB MySQL successfully! ✅✅✅");
@@ -383,3 +380,6 @@ pool.getConnection()
   .catch(err => {
     console.error("❌❌❌ Database connection failed! Error:", err.message);
   });
+
+// ── Démarrage ──────────────────────────────────────────────
+app.listen(PORT, () => console.log(`✅  Haji Cosmétique API → http://localhost:${PORT}`));
