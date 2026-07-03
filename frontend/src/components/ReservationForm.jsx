@@ -164,9 +164,9 @@ export default function ReservationForm({ onSuccess }) {
       </form>
 
       <div className="rf-trust">
-        <span>🔒 {t('Paiement sécurisé','دفع آمن')}</span>
-        <span>🚚 {t('Livraison rapide','توصيل سريع')}</span>
-        <span>↩ {t('7 jours de retour','إرجاع 7 أيام')}</span>
+        <span> {t('Paiement sécurisé','دفع آمن')}</span>
+        <span> {t('Livraison rapide','توصيل سريع')}</span>
+        <span> {t('7 jours de retour','إرجاع 7 أيام')}</span>
       </div>
     </div>
   );
