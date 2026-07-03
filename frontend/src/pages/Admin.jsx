@@ -55,7 +55,7 @@ export default function Admin() {
   const deleteOrder = async (id) => {
     if (!window.confirm('Supprimer cette commande ?')) return;
     await req(`/api/admin/orders/${id}`, 'DELETE');
-    loadOrders(); loadStats(); showToast('🗑️ Commande supprimée');
+    loadOrders(); loadStats(); showToast('Commande supprimée');
   };
 
   // ── Image upload (base64) ──
@@ -102,7 +102,7 @@ export default function Admin() {
   const deleteProduct = async (id) => {
     if (!window.confirm('Supprimer ce produit ?')) return;
     await req(`/api/admin/products/${id}`, 'DELETE');
-    loadProducts(); loadStats(); showToast('🗑️ Produit supprimé');
+    loadProducts(); loadStats(); showToast(' Produit supprimé');
   };
 
   // ── News actions ──
@@ -130,12 +130,12 @@ export default function Admin() {
   };
 
   const NAV = [
-    { id:'dashboard',   icon:'📊', label:'Tableau de bord' },
-    { id:'orders',      icon:'📦', label:'Commandes' },
-    { id:'products',    icon:'🧴', label:'Produits' },
-    { id:'add-product', icon:'➕', label:'Ajouter produit' },
-    { id:'videos',      icon:'🎬', label:'Vidéos' },
-    { id:'news',        icon:'📰', label:'Publications' },
+    { id:'dashboard',   icon:'', label:'Tableau de bord' },
+    { id:'orders',      icon:'', label:'Commandes' },
+    { id:'products',    icon:'', label:'Produits' },
+    { id:'add-product', icon:'', label:'Ajouter produit' },
+    { id:'videos',      icon:'', label:'Vidéos' },
+    { id:'news',        icon:'', label:'Publications' },
   ];
 
   return (
@@ -155,7 +155,7 @@ export default function Admin() {
           </div>
         ))}
         <div className="admin-nav-item" onClick={logout} style={{marginTop:'auto',color:'#ff6b6b'}}>
-          <span>🚪</span> Déconnexion
+          <span></span> Déconnexion
         </div>
       </aside>
 
@@ -165,13 +165,13 @@ export default function Admin() {
         {/* DASHBOARD */}
         {tab === 'dashboard' && (
           <div>
-            <h1 className="admin-page-title">👋 Tableau de bord</h1>
+            <h1 className="admin-page-title"> Tableau de bord</h1>
             <div className="admin-stats">
               {[
-                {num:stats.products||0, label:'Produits actifs',    icon:'🧴'},
-                {num:stats.orders||0,   label:'Commandes totales',  icon:'📦'},
-                {num:(stats.revenue||0)+' TND', label:'Chiffre d\'affaires', icon:'💰'},
-                {num:stats.subscribers||0, label:'Abonnés newsletter', icon:'💌'},
+                {num:stats.products||0, label:'Produits actifs',    icon:''},
+                {num:stats.orders||0,   label:'Commandes totales',  icon:''},
+                {num:(stats.revenue||0)+' TND', label:'Chiffre d\'affaires', icon:''},
+                {num:stats.subscribers||0, label:'Abonnés newsletter', icon:''},
               ].map((s,i) => (
                 <div key={i} className="admin-stat-card">
                   <div className="admin-stat-icon">{s.icon}</div>
