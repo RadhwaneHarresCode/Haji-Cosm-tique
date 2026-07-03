@@ -1,14 +1,14 @@
 /**
  * Haji Cosmétique – Backend Server
- * Stack : Node.js + Express + MySQL (TiDB) + Nodemailer
+ * Stack : Node.js + Express + MySQL (TiDB) + Brevo
  */
 
-const express    = require('express');
-const cors       = require('cors');
-const mysql      = require('mysql2/promise');
-const nodemailer = require('nodemailer');
-const bcrypt     = require('bcryptjs');
-const jwt        = require('jsonwebtoken');
+const express = require('express');
+const cors    = require('cors');
+const mysql   = require('mysql2/promise');
+const bcrypt  = require('bcryptjs');
+const jwt     = require('jsonwebtoken');
+const Brevo   = require('@getbrevo/brevo');
 require('dotenv').config();
 
 const app        = express();
@@ -17,9 +17,9 @@ const JWT_SECRET = process.env.JWT_SECRET || 'haji_secret_2025';
 
 // ── Middleware ─────────────────────────────────────────────
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production'
-    ? (process.env.FRONTEND_URL || '*')
-    : '*',
+  origin: function(origin, callback) {
+    callback(null, true);
+  },
   methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization'],
 };
@@ -32,7 +32,6 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok', app: 'Haji Cosmeti
 app.get('/api/admin/login', (req, res) => res.status(200).json({ info: 'POST to this endpoint with {username,password}' }));
 
 // ── MySQL Pool (TiDB) ──────────────────────────────────────
-// TiDB utilise DB_USERNAME — les deux noms sont supportés ici
 const pool = mysql.createPool({
   host             : process.env.DB_HOST,
   port             : parseInt(process.env.DB_PORT) || 4000,
@@ -45,16 +44,10 @@ const pool = mysql.createPool({
   connectTimeout   : 30000,
 });
 
-// ── Nodemailer ─────────────────────────────────────────────
-const transporter = nodemailer.createTransport({
-  host  : process.env.SMTP_HOST || 'smtp.gmail.com',
-  port  : Number(process.env.SMTP_PORT) || 587,
-  secure: false,
-  auth  : {
-    user: process.env.SMTP_USER || '',
-    pass: process.env.SMTP_PASS || '',
-  },
-});
+// ── Brevo ──────────────────────────────────────────────────
+const brevoClient = Brevo.ApiClient.instance;
+brevoClient.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
+const emailApi = new Brevo.TransactionalEmailsApi();
 
 // ── Auth Middleware ────────────────────────────────────────
 function authMiddleware(req, res, next) {
@@ -153,13 +146,13 @@ app.post('/api/orders', async (req, res) => {
     );
     const orderId = result.insertId;
 
-    // Email au fondateur uniquement
-    if (process.env.SMTP_USER && process.env.OWNER_EMAIL) {
-      await transporter.sendMail({
-        from   : `"Haji Cosmetique" <${process.env.SMTP_USER}>`,
-        to     : process.env.OWNER_EMAIL,
-        subject: `Nouvelle commande #${orderId} - ${name} - ${city}`,
-        html   : `
+    // Email au fondateur via Brevo
+    if (process.env.BREVO_API_KEY && process.env.OWNER_EMAIL) {
+      await emailApi.sendTransacEmail({
+        sender     : { name: 'Haji Cosmetique', email: process.env.SENDER_EMAIL || 'no-reply@haji-cosmetique.tn' },
+        to         : [{ email: process.env.OWNER_EMAIL }],
+        subject    : `Nouvelle commande #${orderId} - ${name} - ${city}`,
+        htmlContent: `
           <div style="font-family:sans-serif;max-width:600px;margin:auto;color:#1a1a1a">
             <div style="background:#2d5a27;padding:20px 30px;border-radius:8px 8px 0 0">
               <h2 style="color:#fff;margin:0">Haji Cosmetique</h2>
@@ -170,11 +163,11 @@ app.post('/api/orders', async (req, res) => {
                 <tr style="background:#f5f0eb"><td style="padding:10px;font-weight:700" colspan="2">Commande #${orderId}</td></tr>
                 <tr><td style="padding:8px;color:#666;width:40%">Client</td><td style="padding:8px"><strong>${name}</strong></td></tr>
                 <tr><td style="padding:8px;color:#666">Telephone</td><td style="padding:8px">${phone}</td></tr>
-                <tr><td style="padding:8px;color:#666">Email</td><td style="padding:8px">${email || '—'}</td></tr>
+                <tr><td style="padding:8px;color:#666">Email</td><td style="padding:8px">${email || '-'}</td></tr>
                 <tr><td style="padding:8px;color:#666">Ville</td><td style="padding:8px">${city}</td></tr>
                 <tr><td style="padding:8px;color:#666">Adresse</td><td style="padding:8px">${address}</td></tr>
                 <tr><td style="padding:8px;color:#666">Produits</td><td style="padding:8px">${itemsSummary}</td></tr>
-                <tr><td style="padding:8px;color:#666">Note</td><td style="padding:8px">${note || '—'}</td></tr>
+                <tr><td style="padding:8px;color:#666">Note</td><td style="padding:8px">${note || '-'}</td></tr>
                 <tr><td style="padding:8px;color:#666">Livraison</td><td style="padding:8px">${shippingCost} TND</td></tr>
                 <tr style="font-size:1.1em;background:#e8f2ec">
                   <td style="padding:10px;font-weight:700">TOTAL</td>
