@@ -45,11 +45,22 @@ const pool = mysql.createPool({
 });
 
 // ── Brevo ──────────────────────────────────────────────────
-const { ApiClient, TransactionalEmailsApi } = require('@getbrevo/brevo');
-// ...
-const brevoClient = ApiClient.instance;
-brevoClient.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
-const emailApi = new TransactionalEmailsApi();
+const axios = require('axios');
+
+async function sendBrevoEmail(to, subject, htmlContent) {
+  if (!process.env.BREVO_API_KEY || !to) return;
+  await axios.post('https://api.brevo.com/v3/smtp/email', {
+    sender     : { name: 'Haji Cosmetique', email: process.env.SENDER_EMAIL },
+    to         : [{ email: to }],
+    subject,
+    htmlContent,
+  }, {
+    headers: {
+      'api-key'     : process.env.BREVO_API_KEY,
+      'Content-Type': 'application/json',
+    },
+  });
+}
 
 // ── Auth Middleware ────────────────────────────────────────
 function authMiddleware(req, res, next) {
