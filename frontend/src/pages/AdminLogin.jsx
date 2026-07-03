@@ -87,19 +87,7 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        <div className="al__hint">
-          <p>Identifiants par défaut :</p>
-          <p>👤 <code>admin</code> &nbsp; 🔑 <code>haji2025</code></p>
-        </div>
-
-        <div className="al__check">
-          <p>⚙️ Vérifiez que le backend tourne :</p>
-          <code>cd backend && npm run dev</code>
-          <br/>
-          <a href={`${API}/api/health`} target="_blank" rel="noreferrer" className="al__test-link">
-            Tester l'API →
-          </a>
-        </div>
+       
       </div>
     </div>
   );
