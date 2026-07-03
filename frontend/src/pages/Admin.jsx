@@ -204,7 +204,7 @@ export default function Admin() {
         {/* ORDERS */}
         {tab === 'orders' && (
           <div>
-            <h1 className="admin-page-title">📦 Commandes</h1>
+            <h1 className="admin-page-title">Commandes</h1>
             <div className="admin-card">
               <table className="admin-table">
                 <thead><tr><th>#</th><th>Client</th><th>Tél</th><th>Produits</th><th>Total</th><th>Ville</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
@@ -238,7 +238,7 @@ export default function Admin() {
         {tab === 'products' && (
           <div>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'24px'}}>
-              <h1 className="admin-page-title" style={{margin:0}}>🧴 Produits</h1>
+              <h1 className="admin-page-title" style={{margin:0}}> Produits</h1>
               <button className="admin-btn admin-btn--primary" onClick={()=>{setEditProduct(null);setPForm({name_fr:'',name_ar:'',price:'',old_price:'',category:'Visage',stock:'',emoji:'🧴',badge:'',desc_fr:'',desc_ar:'',ingredients:'',image:''});setImagePreview('');setTab('add-product')}}>+ Ajouter</button>
             </div>
             <div className="admin-card">
@@ -272,7 +272,7 @@ export default function Admin() {
         {/* ADD / EDIT PRODUCT */}
         {tab === 'add-product' && (
           <div>
-            <h1 className="admin-page-title">{editProduct ? '✏️ Modifier le produit' : '➕ Ajouter un produit'}</h1>
+            <h1 className="admin-page-title">{editProduct ? 'Modifier le produit' : ' Ajouter un produit'}</h1>
             <div className="admin-card">
 
               {/* ── Image upload ── */}
@@ -347,7 +347,7 @@ export default function Admin() {
         {/* VIDEOS */}
         {tab === 'videos' && (
           <div>
-            <h1 className="admin-page-title">🎬 Vidéos & Tutoriels</h1>
+            <h1 className="admin-page-title"> Vidéos & Tutoriels</h1>
             <div className="admin-card">
               <div className="admin-form-grid" style={{gridTemplateColumns:'1fr 1fr'}}>
                 <div className="rf-field">
@@ -387,7 +387,7 @@ export default function Admin() {
         {/* NEWS */}
         {tab === 'news' && (
           <div>
-            <h1 className="admin-page-title">📰 Publications & Actualités</h1>
+            <h1 className="admin-page-title"> Publications & Actualités</h1>
             <div className="admin-card">
               <div className="admin-form-grid">
                 <div className="rf-field">
