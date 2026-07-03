@@ -349,6 +349,15 @@ app.delete('/api/admin/videos/:id', authMiddleware, async (req, res) => {
   }
 });
 
+// ── Keep Alive (prevents Render free tier sleep) ───────
+const https = require('https');
+setInterval(() => {
+  https.get('https://haji-cosm-tique.onrender.com/api/health', (res) => {
+    console.log('🔄 Keep alive ping:', res.statusCode);
+  }).on('error', (err) => {
+    console.log('Keep alive error:', err.message);
+  });
+}, 10 * 60 * 1000); // كل 10 دقائق
 // ── MySQL connection check ─────────────────────────────────
 pool.getConnection()
   .then(conn => { console.log('✅✅✅ Connected to TiDB MySQL successfully!'); conn.release(); })
