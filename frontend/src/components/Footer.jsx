@@ -10,12 +10,12 @@ export default function Footer() {
       <div className="footer__inner">
         <div className="footer__brand">
           <div className="footer__logo">Haji Cosmétique</div>
-          <p className="footer__about">{t('Beauté naturelle inspirée des traditions tunisiennes. Formulé à Sfax, livré dans toute la Tunisie.','جمال طبيعي مستوحى من التقاليد التونسية. مُركَّب في صفاقس، يصل لجميع ولايات تونس.')}</p>
+          <p className="footer__about">{t('Beauté naturelle inspirée des traditions tunisiennes. Formulé à Mareth, livré dans toute la Tunisie.','جمال طبيعي مستوحى من التقاليد التونسية. مُركَّب في مارث، يصل لجميع ولايات تونس.')}</p>
           <div className="footer__social">
-            <a href="#" aria-label="Facebook">📘</a>
-            <a href="#" aria-label="Instagram">📸</a>
-            <a href="#" aria-label="TikTok">🎵</a>
-            <a href="#" aria-label="WhatsApp">💬</a>
+            <a href="#" aria-label="Facebook">Facebook</a>
+            <a href="#" aria-label="Instagram">Intagram</a>
+            <a href="#" aria-label="TikTok">Tik Tok</a>
+            <a href="#" aria-label="WhatsApp">WhatsApp</a>
           </div>
         </div>
         <div>
@@ -40,8 +40,8 @@ export default function Footer() {
           <div className="footer__heading">{t('Contact','تواصل معنا')}</div>
           <ul className="footer__links">
             <li><a>📍 Mareth, Tunisie</a></li>
-            <li><a href="tel:+21612345678">📞 +216 12 345 678</a></li>
-            <li><a href="mailto:contact@haji-cosmetique.tn">📧 contact@haji-cosmetique.tn</a></li>
+            <li><a href="tel:+21612345678"> +216 12 345 678</a></li>
+            <li><a href="mailto:contact@haji-cosmetique.tn">ahlemharres@gmail.com</a></li>
             <li><a>🕐 {t('Lun–Sam 9h–18h','الاثنين–السبت 9–18')}</a></li>
           </ul>
         </div>
