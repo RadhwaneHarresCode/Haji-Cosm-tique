@@ -1,6 +1,6 @@
 /**
  * Haji Cosmétique – Backend Server
- * Stack : Node.js + Express + MySQL (TiDB) + Brevo
+ * Stack : Node.js + Express + MySQL (TiDB) + Brevo (axios)
  */
 
 const express = require('express');
@@ -8,7 +8,7 @@ const cors    = require('cors');
 const mysql   = require('mysql2/promise');
 const bcrypt  = require('bcryptjs');
 const jwt     = require('jsonwebtoken');
-const Brevo   = require('@getbrevo/brevo');
+const axios   = require('axios');
 require('dotenv').config();
 
 const app        = express();
@@ -16,20 +16,17 @@ const PORT       = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'haji_secret_2025';
 
 // ── Middleware ─────────────────────────────────────────────
-const corsOptions = {
-  origin: function(origin, callback) {
-    callback(null, true);
-  },
+app.use(cors({
+  origin: function(origin, callback) { callback(null, true); },
   methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization'],
-};
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+}));
+app.options('*', cors());
 app.use(express.json({ limit: '5mb' }));
 
 // ── Health check ───────────────────────────────────────────
 app.get('/api/health', (req, res) => res.json({ status: 'ok', app: 'Haji Cosmetique API' }));
-app.get('/api/admin/login', (req, res) => res.status(200).json({ info: 'POST to this endpoint with {username,password}' }));
+app.get('/api/admin/login', (req, res) => res.json({ info: 'POST to this endpoint with {username,password}' }));
 
 // ── MySQL Pool (TiDB) ──────────────────────────────────────
 const pool = mysql.createPool({
@@ -44,22 +41,29 @@ const pool = mysql.createPool({
   connectTimeout   : 30000,
 });
 
-// ── Brevo ──────────────────────────────────────────────────
-const axios = require('axios');
-
+// ── Brevo (axios) ──────────────────────────────────────────
 async function sendBrevoEmail(to, subject, htmlContent) {
   if (!process.env.BREVO_API_KEY || !to) return;
-  await axios.post('https://api.brevo.com/v3/smtp/email', {
-    sender     : { name: 'Haji Cosmetique', email: process.env.SENDER_EMAIL },
-    to         : [{ email: to }],
-    subject,
-    htmlContent,
-  }, {
-    headers: {
-      'api-key'     : process.env.BREVO_API_KEY,
-      'Content-Type': 'application/json',
-    },
-  });
+  try {
+    await axios.post(
+      'https://api.brevo.com/v3/smtp/email',
+      {
+        sender     : { name: 'Haji Cosmetique', email: process.env.SENDER_EMAIL },
+        to         : [{ email: to }],
+        subject,
+        htmlContent,
+      },
+      {
+        headers: {
+          'api-key'     : process.env.BREVO_API_KEY,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log('✅ Email envoyé à', to);
+  } catch (err) {
+    console.error('❌ Erreur email Brevo:', err.response?.data || err.message);
+  }
 }
 
 // ── Auth Middleware ────────────────────────────────────────
@@ -160,38 +164,34 @@ app.post('/api/orders', async (req, res) => {
     const orderId = result.insertId;
 
     // Email au fondateur via Brevo
-    if (process.env.BREVO_API_KEY && process.env.OWNER_EMAIL) {
-      await emailApi.sendTransacEmail({
-        sender     : { name: 'Haji Cosmetique', email: process.env.SENDER_EMAIL || 'no-reply@haji-cosmetique.tn' },
-        to         : [{ email: process.env.OWNER_EMAIL }],
-        subject    : `Nouvelle commande #${orderId} - ${name} - ${city}`,
-        htmlContent: `
-          <div style="font-family:sans-serif;max-width:600px;margin:auto;color:#1a1a1a">
-            <div style="background:#2d5a27;padding:20px 30px;border-radius:8px 8px 0 0">
-              <h2 style="color:#fff;margin:0">Haji Cosmetique</h2>
-              <p style="color:rgba(255,255,255,.7);margin:4px 0 0;font-size:.9rem">Nouvelle commande recue</p>
-            </div>
-            <div style="background:#fff;padding:30px;border:1px solid #e0d8d0;border-top:none;border-radius:0 0 8px 8px">
-              <table style="width:100%;border-collapse:collapse;font-size:.95rem">
-                <tr style="background:#f5f0eb"><td style="padding:10px;font-weight:700" colspan="2">Commande #${orderId}</td></tr>
-                <tr><td style="padding:8px;color:#666;width:40%">Client</td><td style="padding:8px"><strong>${name}</strong></td></tr>
-                <tr><td style="padding:8px;color:#666">Telephone</td><td style="padding:8px">${phone}</td></tr>
-                <tr><td style="padding:8px;color:#666">Email</td><td style="padding:8px">${email || '-'}</td></tr>
-                <tr><td style="padding:8px;color:#666">Ville</td><td style="padding:8px">${city}</td></tr>
-                <tr><td style="padding:8px;color:#666">Adresse</td><td style="padding:8px">${address}</td></tr>
-                <tr><td style="padding:8px;color:#666">Produits</td><td style="padding:8px">${itemsSummary}</td></tr>
-                <tr><td style="padding:8px;color:#666">Note</td><td style="padding:8px">${note || '-'}</td></tr>
-                <tr><td style="padding:8px;color:#666">Livraison</td><td style="padding:8px">${shippingCost} TND</td></tr>
-                <tr style="font-size:1.1em;background:#e8f2ec">
-                  <td style="padding:10px;font-weight:700">TOTAL</td>
-                  <td style="padding:10px;font-weight:700;color:#2d5a27">${total} TND</td>
-                </tr>
-              </table>
-              <p style="margin-top:20px;font-size:.85rem;color:#999">Connectez-vous au dashboard admin pour gerer cette commande.</p>
-            </div>
-          </div>`,
-      });
-    }
+    await sendBrevoEmail(
+      process.env.OWNER_EMAIL,
+      `Nouvelle commande #${orderId} - ${name} - ${city}`,
+      `<div style="font-family:sans-serif;max-width:600px;margin:auto;color:#1a1a1a">
+        <div style="background:#2d5a27;padding:20px 30px;border-radius:8px 8px 0 0">
+          <h2 style="color:#fff;margin:0">Haji Cosmetique</h2>
+          <p style="color:rgba(255,255,255,.7);margin:4px 0 0;font-size:.9rem">Nouvelle commande recue</p>
+        </div>
+        <div style="background:#fff;padding:30px;border:1px solid #e0d8d0;border-top:none;border-radius:0 0 8px 8px">
+          <table style="width:100%;border-collapse:collapse;font-size:.95rem">
+            <tr style="background:#f5f0eb"><td style="padding:10px;font-weight:700" colspan="2">Commande #${orderId}</td></tr>
+            <tr><td style="padding:8px;color:#666;width:40%">Client</td><td style="padding:8px"><strong>${name}</strong></td></tr>
+            <tr><td style="padding:8px;color:#666">Telephone</td><td style="padding:8px">${phone}</td></tr>
+            <tr><td style="padding:8px;color:#666">Email</td><td style="padding:8px">${email || '-'}</td></tr>
+            <tr><td style="padding:8px;color:#666">Ville</td><td style="padding:8px">${city}</td></tr>
+            <tr><td style="padding:8px;color:#666">Adresse</td><td style="padding:8px">${address}</td></tr>
+            <tr><td style="padding:8px;color:#666">Produits</td><td style="padding:8px">${itemsSummary}</td></tr>
+            <tr><td style="padding:8px;color:#666">Note</td><td style="padding:8px">${note || '-'}</td></tr>
+            <tr><td style="padding:8px;color:#666">Livraison</td><td style="padding:8px">${shippingCost} TND</td></tr>
+            <tr style="font-size:1.1em;background:#e8f2ec">
+              <td style="padding:10px;font-weight:700">TOTAL</td>
+              <td style="padding:10px;font-weight:700;color:#2d5a27">${total} TND</td>
+            </tr>
+          </table>
+          <p style="margin-top:20px;font-size:.85rem;color:#999">Connectez-vous au dashboard admin pour gerer cette commande.</p>
+        </div>
+      </div>`
+    );
 
     res.status(201).json({ message: 'Commande créée.', orderId, total });
   } catch (err) {
@@ -351,13 +351,8 @@ app.delete('/api/admin/videos/:id', authMiddleware, async (req, res) => {
 
 // ── MySQL connection check ─────────────────────────────────
 pool.getConnection()
-  .then(connection => {
-    console.log('✅✅✅ Connected to TiDB MySQL successfully! ✅✅✅');
-    connection.release();
-  })
-  .catch(err => {
-    console.error('❌❌❌ Database connection failed! Error:', err.message);
-  });
+  .then(conn => { console.log('✅✅✅ Connected to TiDB MySQL successfully!'); conn.release(); })
+  .catch(err  => { console.error('❌❌❌ Database connection failed:', err.message); });
 
 // ── Démarrage ──────────────────────────────────────────────
 app.listen(PORT, () => console.log(`✅  Haji Cosmétique API → http://localhost:${PORT}`));
