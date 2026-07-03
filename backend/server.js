@@ -45,9 +45,11 @@ const pool = mysql.createPool({
 });
 
 // ── Brevo ──────────────────────────────────────────────────
-const brevoClient = Brevo.ApiClient.instance;
+const { ApiClient, TransactionalEmailsApi } = require('@getbrevo/brevo');
+// ...
+const brevoClient = ApiClient.instance;
 brevoClient.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
-const emailApi = new Brevo.TransactionalEmailsApi();
+const emailApi = new TransactionalEmailsApi();
 
 // ── Auth Middleware ────────────────────────────────────────
 function authMiddleware(req, res, next) {
