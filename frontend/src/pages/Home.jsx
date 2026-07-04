@@ -66,7 +66,7 @@ export default function Home() {
             </div>
             <div className="hero__trust">
               <div><span className="hero__trust-num">500+</span><span className="hero__trust-label">{t('Produits','منتج')}</span></div>
-              <div><span className="hero__trust-num">5k+</span><span className="hero__trust-label">{t('Clientes','عميلة')}</span></div>
+              <div><span className="hero__trust-num">1k+</span><span className="hero__trust-label">{t('Clientes','عميلة')}</span></div>
               <div><span className="hero__trust-num">24</span><span className="hero__trust-label">{t('Gouvernorats','ولاية')}</span></div>
             </div>
           </div>
