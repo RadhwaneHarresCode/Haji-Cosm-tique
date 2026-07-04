@@ -6,7 +6,7 @@ import './AdminLogin.css';
 const API = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 export default function AdminLogin() {
-  const [form, setForm]     = useState({ username: 'admin', password: '' });
+  const [form, setForm]     = useState({ username: '', password: '' });
   const [error, setError]   = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
