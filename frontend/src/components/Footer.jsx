@@ -11,11 +11,19 @@ export default function Footer() {
         <div className="footer__brand">
           <div className="footer__logo">Haji Cosmétique</div>
           <p className="footer__about">{t('Beauté naturelle inspirée des traditions tunisiennes. Formulé à Mareth, livré dans toute la Tunisie.','جمال طبيعي مستوحى من التقاليد التونسية. مُركَّب في مارث، يصل لجميع ولايات تونس.')}</p>
-          <div className="footer__social">
-            <a href="#" aria-label="Fb">Facebook</a>
-            <a href="#" aria-label="Inst">Intagram</a>
-            <a href="#" aria-label="TTk">Tik Tok</a>
-            <a href="#" aria-label="WApp">WhatsApp</a>
+         <div className="footer__social">
+            <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+              <FaFacebook size={24} />
+            </a>
+            <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+              <FaInstagram size={24} />
+            </a>
+            <a href="#" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+              <FaTiktok size={24} />
+            </a>
+            <a href="#" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+              <FaWhatsapp size={24} />
+            </a>
           </div>
         </div>
         <div>
@@ -47,7 +55,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="footer__bottom">
-        <span>© 2025 Haji Cosmétique. {t('Tous droits réservés. Sfax, Tunisie.','جميع الحقوق محفوظة. صفاقس، تونس.')}</span>
+        <span>© 2026 Haji Cosmétique. {t('Tous droits réservés.Mareth, Tunisie.','جميع الحقوق محفوظة. صفاقس، تونس.')}</span>
         <span>{t('Fait en Tunisie','صُنع في تونس')}</span>
       </div>
     </footer>
