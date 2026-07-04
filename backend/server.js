@@ -28,6 +28,12 @@ app.use(express.json({ limit: '5mb' }));
 app.get('/api/health', (req, res) => res.json({ status: 'ok', app: 'Haji Cosmetique API' }));
 app.get('/api/admin/login', (req, res) => res.json({ info: 'POST to this endpoint with {username,password}' }));
 
+// ── TEMPORARY: Generate Hash (احذف هذا الـ route بعد الاستخدام) ──
+app.get('/api/generate-hash/:password', async (req, res) => {
+  const hash = await bcrypt.hash(req.params.password, 10);
+  res.json({ hash });
+});
+
 // ── MySQL Pool (TiDB) ──────────────────────────────────────
 const pool = mysql.createPool({
   host             : process.env.DB_HOST,
@@ -163,7 +169,6 @@ app.post('/api/orders', async (req, res) => {
     );
     const orderId = result.insertId;
 
-    // Email au fondateur via Brevo
     await sendBrevoEmail(
       process.env.OWNER_EMAIL,
       `Nouvelle commande #${orderId} - ${name} - ${city}`,
@@ -349,15 +354,14 @@ app.delete('/api/admin/videos/:id', authMiddleware, async (req, res) => {
   }
 });
 
-// ── Keep Alive (prevents Render free tier sleep) ───────
+// ── Keep Alive (prevents Render free tier sleep) ───────────
 const https = require('https');
 setInterval(() => {
   https.get('https://haji-cosm-tique.onrender.com/api/health', (res) => {
-    console.log('🔄 Keep alive ping:', res.statusCode);
-  }).on('error', (err) => {
-    console.log('Keep alive error:', err.message);
-  });
-}, 10 * 60 * 1000); // كل 10 دقائق
+    console.log('🔄 Keep alive:', res.statusCode);
+  }).on('error', () => {});
+}, 10 * 60 * 1000);
+
 // ── MySQL connection check ─────────────────────────────────
 pool.getConnection()
   .then(conn => { console.log('✅✅✅ Connected to TiDB MySQL successfully!'); conn.release(); })
