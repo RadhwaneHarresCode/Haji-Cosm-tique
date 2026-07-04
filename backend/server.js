@@ -28,12 +28,6 @@ app.use(express.json({ limit: '5mb' }));
 app.get('/api/health', (req, res) => res.json({ status: 'ok', app: 'Haji Cosmetique API' }));
 app.get('/api/admin/login', (req, res) => res.json({ info: 'POST to this endpoint with {username,password}' }));
 
-// ── TEMPORARY: Generate Hash (احذف هذا الـ route بعد الاستخدام) ──
-app.get('/api/generate-hash/:password', async (req, res) => {
-  const hash = await bcrypt.hash(req.params.password, 10);
-  res.json({ hash });
-});
-
 // ── MySQL Pool (TiDB) ──────────────────────────────────────
 const pool = mysql.createPool({
   host             : process.env.DB_HOST,
@@ -357,8 +351,8 @@ app.delete('/api/admin/videos/:id', authMiddleware, async (req, res) => {
 // ── Keep Alive (prevents Render free tier sleep) ───────────
 const https = require('https');
 setInterval(() => {
-  https.get('https://haji-cosm-tique.onrender.com/api/health', (res) => {
-    console.log('🔄 Keep alive:', res.statusCode);
+  https.get('https://haji-cosm-tique.onrender.com/api/health', () => {
+    console.log('🔄 Keep alive ping sent');
   }).on('error', () => {});
 }, 10 * 60 * 1000);
 
