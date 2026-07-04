@@ -12,7 +12,7 @@ export default function Footer() {
           <div className="footer__logo">Haji Cosmétique</div>
           <p className="footer__about">{t('Beauté naturelle inspirée des traditions tunisiennes. Formulé à Mareth, livré dans toute la Tunisie.','جمال طبيعي مستوحى من التقاليد التونسية. مُركَّب في مارث، يصل لجميع ولايات تونس.')}</p>
          <div className="footer__social">
-            <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.facebook.com/haji.cosmetique" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-facebook-f" style={{ fontSize: '24px' }}></i>
             </a>
             <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
