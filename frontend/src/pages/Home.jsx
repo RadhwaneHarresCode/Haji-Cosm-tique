@@ -220,17 +220,23 @@ export default function Home() {
 
       {/* ── ABOUT ── */}
       <section className="section section--blush" id="about">
-        <div className="container about-grid">
-          <div>
-            <div className="hero__eyebrow" style={{marginBottom:'16px'}}>🌿 {t('Notre Histoire','قصتنا')}</div>
-            <h2 className="section__title" style={{marginBottom:'16px'}}>{t('Haji Cosmétique,','حاجي كوزمتيك،')}<br/><span>{t('la beauté tunisienne','جمال تونسي أصيل')}</span></h2>
-            <p style={{color:'var(--mid)',lineHeight:1.8,marginBottom:'14px'}}>{t('Fondée à Mareth, Haji Cosmétique est née de la passion pour les ingrédients naturels tunisiens — argile, huile d\'olive, rosa damascena.','تأسست في مارث، نشأت حاجي كوزمتيك من الشغف بالمكونات الطبيعية التونسية — الطين، زيت الزيتون، ورد الدمشق.')}</p>
-            <p style={{color:'var(--mid)',lineHeight:1.8,marginBottom:'28px'}}>{t('Nous livrons dans les 24 gouvernorats tunisiens avec des produits testés dermatologiquement.','نوصل لجميع الولايات الـ24 التونسية بمنتجات مختبرة طبيًا.')}</p>
-            <Link to="/about" className="btn btn--primary">{t('En savoir plus →','اعرف أكثر →')}</Link>
-          </div>
-          <div className="about-grid__visual">🧖‍♀️</div>
-        </div>
-      </section>
+  <div className="container about-grid">
+    <div>
+      <div className="hero__eyebrow" style={{marginBottom:'16px'}}>🌿 {t('Notre Histoire','قصتنا')}</div>
+      <h2 className="section__title" style={{marginBottom:'16px'}}>{t('Haji Cosmétique,','حاجي كوزمتيك،')}<br/><span>{t('la beauté tunisienne','جمال تونسي أصيل')}</span></h2>
+      <p style={{color:'var(--mid)',lineHeight:1.8,marginBottom:'14px'}}>{t('Fondée à Mareth, Haji Cosmétique est née de la passion pour les ingrédients naturels tunisiens — argile, huile d\'olive, rosa damascena.','تأسست في مارث، نشأت حاجي كوزمتيك من الشغف بالمكونات الطبيعية التونسية — الطين، زيت الزيتون، ورد الدمشق.')}</p>
+      <p style={{color:'var(--mid)',lineHeight:1.8,marginBottom:'28px'}}>{t('Nous livrons dans les 24 gouvernorats tunisiens avec des produits testés dermatologiquement.','نوصل لجميع الولايات الـ24 التونسية بمنتجات مختبرة طبيًا.')}</p>
+      <Link to="/about" className="btn btn--primary">{t('En savoir plus →','اعرف أكثر →')}</Link>
+    </div>
+    <div className="about-grid__visual">
+      <img 
+        src="../assets/logo.png" 
+        alt="Haji Cosmétique - Logo" 
+        style={{ width: '100%', maxWidth: '300px', height: 'auto' }}
+      />
+    </div>
+  </div>
+</section>
 
     </div>
   );
