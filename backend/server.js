@@ -80,12 +80,13 @@ function authMiddleware(req, res, next) {
 
 // ── Frais de livraison Tunisie ─────────────────────────────
 const SHIPPING_COSTS = {
-  'Tunis': 8, 'Sfax': 10, 'Sousse': 9, 'Kairouan': 11,
-  'Bizerte': 10, 'Gabès': 13, 'Ariana': 8, 'Gafsa': 14,
-  'Monastir': 9, 'Ben Arous': 8, 'Kasserine': 13, 'Médenine': 14,
-  'Nabeul': 10, 'Tataouine': 16, 'Béja': 11, 'Jendouba': 12,
-  'Le Kef': 12, 'Mahdia': 10, 'Sidi Bouzid': 13, 'Siliana': 12,
-  'Tozeur': 15, 'Zaghouan': 9, 'Manouba': 8, 'Kébili': 15,
+  'Tunis': 9, 'Sfax': 9, 'Sousse': 9, 'Kairouan': 9,
+  'Bizerte': 9, 'Gabès': 9, 'Ariana': 9, 'Gafsa': 9,
+  'Monastir': 9, 'Ben Arous': 9, 'Kasserine': 9, 'Médenine': 9,
+  'Nabeul': 9, 'Tataouine': 9, 'Béja': 9, 'Jendouba': 9,
+  'Le Kef': 9, 'Mahdia': 9, 'Sidi Bouzid': 9, 'Siliana': 9,
+  'Tozeur': 9, 'Zaghouan': 9, 'Manouba': 9, 'Kébili': 9,
+  'Mareth': 2
 };
 
 // ══════════════════════════════════════════════════════════
