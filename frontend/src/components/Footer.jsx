@@ -13,16 +13,16 @@ export default function Footer() {
           <p className="footer__about">{t('Beauté naturelle inspirée des traditions tunisiennes. Formulé à Mareth, livré dans toute la Tunisie.','جمال طبيعي مستوحى من التقاليد التونسية. مُركَّب في مارث، يصل لجميع ولايات تونس.')}</p>
          <div className="footer__social">
             <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-              <FaFacebook size={24} />
+              <i className="fab fa-facebook-f" style={{ fontSize: '24px' }}></i>
             </a>
             <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-              <FaInstagram size={24} />
+              <i className="fab fa-instagram" style={{ fontSize: '24px' }}></i>
             </a>
             <a href="#" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
-              <FaTiktok size={24} />
+              <i className="fab fa-tiktok" style={{ fontSize: '24px' }}></i>
             </a>
             <a href="#" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
-              <FaWhatsapp size={24} />
+              <i className="fab fa-whatsapp" style={{ fontSize: '24px' }}></i>
             </a>
           </div>
         </div>
