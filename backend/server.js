@@ -211,6 +211,31 @@ app.post('/api/newsletter', async (req, res) => {
   }
 });
 
+// POST /api/contact
+app.post('/api/contact', async (req, res) => {
+  const { name, email, phone, message } = req.body;
+  if (!name || !message) 
+    return res.status(400).json({ error: 'Nom et message requis.' });
+
+  await sendBrevoEmail(
+    process.env.OWNER_EMAIL,
+    `Nouveau message de contact — ${name}`,
+    `<div style="font-family:sans-serif;max-width:600px;margin:auto">
+      <div style="background:#2d5a27;padding:20px 30px;border-radius:8px 8px 0 0">
+        <h2 style="color:#fff;margin:0">Message de contact</h2>
+      </div>
+      <div style="background:#fff;padding:30px;border:1px solid #e0d8d0;border-radius:0 0 8px 8px">
+        <p><strong>Nom:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email || '—'}</p>
+        <p><strong>Téléphone:</strong> ${phone || '—'}</p>
+        <p><strong>Message:</strong><br/>${message}</p>
+      </div>
+    </div>`
+  );
+
+  res.status(201).json({ message: 'Message envoyé.' });
+});
+
 // ══════════════════════════════════════════════════════════
 // ADMIN ROUTES
 // ══════════════════════════════════════════════════════════
