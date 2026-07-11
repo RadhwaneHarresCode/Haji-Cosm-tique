@@ -43,10 +43,28 @@ export default function ProductDetail() {
       <Link to="/shop" className="pd__back">← {t('Retour à la boutique','العودة للمتجر')}</Link>
 
       <div className="pd__grid">
-        {/* Image */}
-        <div>
-          <div className="pd__main-img">{product.emoji}</div>
+             {/* Image */}
+      <div>
+        <div className="pd__main-img">
+          {product.image && product.image.length > 100 ? (
+            <img
+              src={product.image}
+              alt={name}
+              className="pd__photo"
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'flex';
+              }}
+            />
+          ) : null}
+          <span style={{
+            display: product.image && product.image.length > 100 ? 'none' : 'flex',
+            fontSize: 'clamp(5rem,12vw,9rem)'
+          }}>
+            {product.emoji || '🧴'}
+          </span>
         </div>
+      </div>
 
         {/* Info */}
         <div className="pd__info">
