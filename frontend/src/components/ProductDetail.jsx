@@ -46,10 +46,23 @@ export default function ProductDetail() {
         {/* Image */}
         <div>
           <div className="pd__main-img">
-            {product.image
-              ? <img src={product.image} alt={name} className="pd__photo" />
-              : <span>{product.emoji || '🧴'}</span>
-            }
+            {product.image && product.image.length > 100 ? (
+              <img
+                src={product.image}
+                alt={name}
+                className="pd__photo"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+            ) : null}
+            <span style={{
+              display: product.image && product.image.length > 100 ? 'none' : 'flex',
+              fontSize: 'clamp(5rem,12vw,9rem)'
+            }}>
+              {product.emoji || '🧴'}
+            </span>
           </div>
         </div>
 
