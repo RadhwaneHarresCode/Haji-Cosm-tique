@@ -10,7 +10,15 @@
   font-size:clamp(5rem,12vw,9rem); box-shadow:var(--shadow-lg);
   overflow:hidden;
 }
-.pd__photo { width:100%; height:100%; object-fit:cover; border-radius:var(--radius); }
+.pd__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: var(--radius);
+}
 .pd__brand { color:var(--mid); font-size:.82rem; margin-bottom:7px; }
 .pd__name { font-family:var(--font-display); font-size:clamp(1.5rem,3vw,2.2rem); font-weight:700; margin-bottom:10px; line-height:1.2; }
 .pd__stars { color:var(--gold); font-size:.88rem; margin-bottom:12px; }
