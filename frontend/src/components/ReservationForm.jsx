@@ -36,12 +36,26 @@ export default function ReservationForm({ onSuccess }) {
     setShippingCost(shippingMap[form.city] ?? 0);
   }, [form.city, shippingMap]);
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-    setError('');
-  };
+  const handleChange = (e) => {
+  const { name, value } = e.target;
 
+  if (name === "phone") {
+    // Keep only digits and limit to 8 numbers
+    const phone = value.replace(/\D/g, "").slice(0, 8);
+
+    setForm((prev) => ({
+      ...prev,
+      phone,
+    }));
+  } else {
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  setError("");
+};
   // 3. Soumettre la commande
   const handleSubmit = async e => {
     e.preventDefault();
