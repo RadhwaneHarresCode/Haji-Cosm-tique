@@ -313,8 +313,8 @@ export default function Admin() {
                 <div className="rf-field">
                   <label className="rf-label">Catégorie</label>
                   <select className="rf-input" value={pForm.category} onChange={e=>setPForm(p=>({...p,category:e.target.value}))}>
-                    {['Visage','Corps','Cheveux','Maquillage','Parfum'].map(c=><option key={c}>{c}</option>)}
-                  </select>
+                      {['Visage','Corps','Cheveux','Maquillage','Parfum','Accessoire'].map(c=><option key={c}>{c}</option>)}
+                    </select>
                 </div>
                 <div className="rf-field">
                   <label className="rf-label">Badge</label>
