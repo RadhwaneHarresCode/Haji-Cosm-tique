@@ -128,7 +128,18 @@ export default function ReservationForm({ onSuccess }) {
           </div>
           <div className="rf-field">
             <label className="rf-label">{t('Téléphone *', 'الهاتف *')}</label>
-            <input name="phone" type="tel" className="rf-input" value={form.phone} onChange={handleChange} placeholder="+216 XX XXX XXX" required />
+            <input
+                    name="phone"
+                    type="tel"
+                    className="rf-input"
+                    value={form.phone}
+                    onChange={handleChange}
+                    placeholder="12 345 678"
+                    maxLength={8}
+                    inputMode="numeric"
+                    pattern="[0-9]{8}"
+                    required
+                  />
           </div>
         </div>
 
