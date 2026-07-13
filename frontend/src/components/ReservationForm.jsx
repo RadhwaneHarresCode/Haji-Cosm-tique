@@ -63,6 +63,15 @@ export default function ReservationForm({ onSuccess }) {
       setError(t('Veuillez remplir tous les champs obligatoires.', 'يرجى ملء جميع الحقول المطلوبة.'));
       return;
     }
+      if (form.phone.length !== 8) {
+            setError(
+              t(
+                "Le numéro de téléphone doit contenir exactement 8 chiffres.",
+                "يجب أن يتكون رقم الهاتف من 8 أرقام."
+              )
+            );
+            return;
+          }
     setLoading(true);
     setError('');
     try {
