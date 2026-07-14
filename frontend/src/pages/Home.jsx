@@ -56,7 +56,6 @@ export default function Home() {
         <div className="hero__leaf hero__leaf--l2">🌿</div>
         <div className="container hero__grid">
           <div className="hero__text">
-            <div className="hero__eyebrow">✨ {t('Nouvelle Collection Printemps 2025','مجموعتنا الجديدة لربيع 2025')}</div>
             <h1 className="hero__headline">
               {t('Beauté Naturelle.','جمال طبيعي.')}<br/>
               <em>{t('Authenticité Tunisienne.','أصالة تونسية.')}</em>
@@ -146,7 +145,7 @@ export default function Home() {
         <div className="promo-banner">
           <div className="promo-banner__text">
             <div className="promo-banner__eyebrow">✦ {t('Offre Limitée','عرض محدود الوقت')}</div>
-            <h2 className="promo-banner__headline">{t('Ventes de Printemps en cours !','تخفيضات الربيع، ما تفوتهاش!')}</h2>
+            <h2 className="promo-banner__headline">{t('Ventes de été en cours !','تخفيضات الصيف، ما تفوتهاش!')}</h2>
             <p className="promo-banner__sub">{t('Jusqu\'à 40% sur une sélection de crèmes, sérums et soins naturels.','تخفيض يوصل لـ40% على مجموعة مختارة من الكريمات والسيرومات والمنتوجات الطبيعية.')}</p>
             <Link to="/shop?badge=Promo" className="btn btn--rose">{t('Explorer les offres →','اكتشف العروض →')}</Link>
           </div>
