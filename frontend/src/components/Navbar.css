@@ -67,6 +67,7 @@
   color:var(--mid); cursor:pointer; transition:all .2s;
 }
 .nav__lang button.active { background:var(--forest); color:#fff; }
+.nav__lang--mobile { display:none; }
 .nav__cart-btn { position:relative; background:none; border:none; font-size:1.2rem; padding:5px; cursor:pointer; }
 .nav__cart-count {
   position:absolute; top:-2px; right:-2px; background:var(--rose); color:#fff;
@@ -101,7 +102,11 @@
 
   .nav__search { max-width: 140px; }
   .nav__search input { font-size: .8rem; padding: 7px 36px 7px 12px; }
-  .nav__lang { display: none; } /* moved into mobile menu if needed */
+  .nav__lang { display: none; } /* the desktop pill in nav__actions is hidden on mobile */
+  .nav__lang--mobile {
+    display: flex; margin-top: 6px; padding-top: 16px;
+    border-top: 1px solid var(--border); width: fit-content;
+  }
   .nav__hamburger { display: block; }
 }
 

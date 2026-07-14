@@ -61,6 +61,12 @@ export default function Navbar() {
           <Link to="/news"      className={isActive('/news')}      onClick={() => setMenuOpen(false)}>{t('Actualités','أخبار')}</Link>
           <Link to="/about"     className={isActive('/about')}     onClick={() => setMenuOpen(false)}>{t('À propos','عنا')}</Link>
           <Link to="/contact"   className={isActive('/contact')}   onClick={() => setMenuOpen(false)}>{t('Contact','اتصل بنا')}</Link>
+
+          {/* Lang switch — visible only inside the mobile menu */}
+          <div className="nav__lang nav__lang--mobile">
+            <button className={lang === 'fr' ? 'active' : ''} onClick={() => { setLang('fr'); setMenuOpen(false); }}>FR</button>
+            <button className={lang === 'ar' ? 'active' : ''} onClick={() => { setLang('ar'); setMenuOpen(false); }}>AR</button>
+          </div>
         </nav>
 
         {/* Search */}
