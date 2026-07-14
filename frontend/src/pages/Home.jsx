@@ -220,6 +220,26 @@ export default function Home() {
         </section>
       )}
 
+      {/* ── NEWSLETTER ── */}
+      <div className="newsletter">
+        <div className="newsletter__inner">
+          <div>
+            <h3>{t('Reste au courant de nos offres','ابقى قريب من عروضنا')}</h3>
+            <p>{t('Inscris-toi et reçois nos nouveautés et promos en avant-première.','سجّل بريدك الإلكتروني وكن أول من يعرف بالمنتوجات الجديدة والتخفيضات.')}</p>
+          </div>
+          <div className="newsletter__form">
+            <input
+              type="email"
+              placeholder={t('Votre email','بريدك الإلكتروني')}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+            <button className="btn btn--primary" onClick={handleSubscribe}>{t('S\'abonner','اشترك الآن')}</button>
+          </div>
+          {subMsg && <p style={{width:'100%',marginTop:'10px',fontSize:'.85rem',color:'var(--forest)'}}>{subMsg}</p>}
+        </div>
+      </div>
+
       {/* ── ABOUT ── */}
       <section className="section section--blush" id="about">
   <div className="container about-grid">
