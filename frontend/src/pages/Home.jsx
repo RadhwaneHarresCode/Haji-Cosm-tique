@@ -38,9 +38,9 @@ export default function Home() {
     if (!email) return;
     try {
       await fetch(`${API}/api/newsletter`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email}) });
-      setSubMsg(t('✅ Abonnement confirmé !','✅ تم الاشتراك!'));
+      setSubMsg(t('✅ Abonnement confirmé !','✅ تم اشتراكك بنجاح!'));
       setEmail('');
-    } catch { setSubMsg(t('Erreur. Réessayez.','خطأ. حاول مجددًا.')); }
+    } catch { setSubMsg(t('Erreur. Réessayez.','صار خطأ، عاود جرب.')); }
   };
 
   const newArrivals  = products.slice(0, 4);
@@ -56,15 +56,15 @@ export default function Home() {
         <div className="hero__leaf hero__leaf--l2">🌿</div>
         <div className="container hero__grid">
           <div className="hero__text">
-            <div className="hero__eyebrow">✨ {t('Nouvelle Collection Printemps 2025','مجموعة ربيع 2025 الجديدة')}</div>
+            <div className="hero__eyebrow">✨ {t('Nouvelle Collection Printemps 2025','مجموعتنا الجديدة لربيع 2025')}</div>
             <h1 className="hero__headline">
               {t('Beauté Naturelle.','جمال طبيعي.')}<br/>
               <em>{t('Authenticité Tunisienne.','أصالة تونسية.')}</em>
             </h1>
-            <p className="hero__sub">{t('Des soins cosmétiques inspirés des traditions tunisiennes. Qualité premium, ingrédients naturels, livrés partout en Tunisie.','منتجات تجميلية مستوحاة من التقاليد التونسية. جودة عالية، مكونات طبيعية، توصيل لجميع ولايات تونس.')}</p>
+            <p className="hero__sub">{t('Des soins cosmétiques inspirés des traditions tunisiennes. Qualité premium, ingrédients naturels, livrés partout en Tunisie.','منتوجات تجميل تونسية أصيلة، بمكونات طبيعية 100% وجودة عالية. نوصّلولك فين ما كنت في تونس.')}</p>
             <div className="hero__actions">
-              <Link to="/shop" className="btn btn--primary">{t('Découvrir la boutique →','استكشف المتجر →')}</Link>
-              <Link to="/news" className="btn btn--outline">{t('Nos actualités','أخبارنا')}</Link>
+              <Link to="/shop" className="btn btn--primary">{t('Découvrir la boutique →','اكتشف المتجر →')}</Link>
+              <Link to="/news" className="btn btn--outline">{t('Nos actualités','آخر أخبارنا')}</Link>
             </div>
             <div className="hero__trust">
               <div><span className="hero__trust-num">500+</span><span className="hero__trust-label">{t('Produits','منتج')}</span></div>
@@ -74,7 +74,7 @@ export default function Home() {
           </div>
           <div className="hero__visual">
             <div className="hero__img-wrap"><span style={{fontSize:'9rem'}}>💄</span></div>
-            <div className="hero__floating-badge">🌿 {t('100% Naturel','طبيعي 100%')}</div>
+            <div className="hero__floating-badge">🌿 {t('100% Naturel','مكونات طبيعية 100%')}</div>
             {products[0] && (
               <div className="hero__product-card">
                 <span style={{fontSize:'2.5rem',display:'block',textAlign:'center',padding:'12px 0'}}>{products[0].emoji}</span>
@@ -93,10 +93,10 @@ export default function Home() {
       <div className="trust-bar">
         <div className="container trust-bar__inner">
           {[
-            {icon:'🚚', fr:'Livraison rapide',     ar:'توصيل سريع',    sfr:'Partout en Tunisie',   sar:'في كل ولايات تونس'},
-            {icon:'🛡️', fr:'Paiement sécurisé',    ar:'دفع آمن',       sfr:'100% protégé',         sar:'محمي 100%'},
-            {icon:'🔄', fr:'Retour facile',         ar:'إرجاع سهل',    sfr:'7 jours',              sar:'7 أيام'},
-            {icon:'🌿', fr:'100% Naturel',          ar:'طبيعي 100%',   sfr:'Certifié',             sar:'معتمد'},
+            {icon:'🚚', fr:'Livraison rapide',     ar:'توصيل سريع',      sfr:'Partout en Tunisie',   sar:'لكل ولايات تونس'},
+            {icon:'🛡️', fr:'Paiement sécurisé',    ar:'خلاص آمن',        sfr:'100% protégé',         sar:'مضمون 100%'},
+            {icon:'🔄', fr:'Retour facile',         ar:'إرجاع سهل',       sfr:'7 jours',              sar:'خلال 7 أيام'},
+            {icon:'🌿', fr:'100% Naturel',          ar:'مكونات طبيعية',   sfr:'Certifié',             sar:'جودة معتمدة'},
           ].map((item, i) => (
             <div key={i} className="trust-bar__item">
               <div className="trust-bar__icon">{item.icon}</div>
@@ -113,15 +113,15 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <div className="section__header">
-            <h2 className="section__title">{t('Nos','فئاتنا')} <span>{t('Catégories','المميزة')}</span></h2>
-            <Link to="/shop" className="view-all">{t('Voir tout →','عرض الكل →')}</Link>
+            <h2 className="section__title">{t('Nos','تصفح')} <span>{t('Catégories','فئاتنا')}</span></h2>
+            <Link to="/shop" className="view-all">{t('Voir tout →','شوف الكل →')}</Link>
           </div>
           <div className="cats">
             {CATEGORIES.map(c => (
               <div key={c.id} className="cat-card" onClick={()=>navigate(`/shop?category=${c.id}`)}>
                 <div className="cat-card__img">{c.emoji}</div>
                 <div className="cat-card__name">{lang==='ar'?c.ar:c.fr}</div>
-                <div className="cat-card__count">{c.count}+ {t('items','منتج')}</div>
+                <div className="cat-card__count">{c.count}+ {t('items','منتوج')}</div>
               </div>
             ))}
           </div>
@@ -132,8 +132,8 @@ export default function Home() {
       <section className="section section--card">
         <div className="container">
           <div className="section__header">
-            <h2 className="section__title">{t('Nouvelles','الوافدات')} <span>{t('Arrivées','الجديدة')}</span></h2>
-            <Link to="/shop" className="view-all">{t('Voir tout →','عرض الكل →')}</Link>
+            <h2 className="section__title">{t('Nouvelles','أحدث')} <span>{t('Arrivées','المنتوجات')}</span></h2>
+            <Link to="/shop" className="view-all">{t('Voir tout →','شوف الكل →')}</Link>
           </div>
           <div className="grid-4">
             {newArrivals.map(p => <ProductCard key={p.id} product={p} />)}
@@ -145,9 +145,9 @@ export default function Home() {
       <div className="container">
         <div className="promo-banner">
           <div className="promo-banner__text">
-            <div className="promo-banner__eyebrow">✦ {t('Offre Limitée','عرض محدود')}</div>
-            <h2 className="promo-banner__headline">{t('Ventes de Printemps en cours !','تخفيضات الربيع لا تفوتها!')}</h2>
-            <p className="promo-banner__sub">{t('Jusqu\'à 40% sur une sélection de crèmes, sérums et soins naturels.','خصومات تصل 40% على تشكيلة من أفضل الكريمات والمصلات.')}</p>
+            <div className="promo-banner__eyebrow">✦ {t('Offre Limitée','عرض محدود الوقت')}</div>
+            <h2 className="promo-banner__headline">{t('Ventes de Printemps en cours !','تخفيضات الربيع، ما تفوتهاش!')}</h2>
+            <p className="promo-banner__sub">{t('Jusqu\'à 40% sur une sélection de crèmes, sérums et soins naturels.','تخفيض يوصل لـ40% على مجموعة مختارة من الكريمات والسيرومات والمنتوجات الطبيعية.')}</p>
             <Link to="/shop?badge=Promo" className="btn btn--rose">{t('Explorer les offres →','اكتشف العروض →')}</Link>
           </div>
           <div className="promo-banner__disc">
@@ -162,8 +162,8 @@ export default function Home() {
         <section className="section">
           <div className="container">
             <div className="section__header">
-              <h2 className="section__title">Best <span>Sellers</span></h2>
-              <Link to="/shop?badge=Best-seller" className="view-all">{t('Voir tout →','عرض الكل →')}</Link>
+              <h2 className="section__title">{t('Best','الأكثر')} <span>{t('Sellers','مبيعًا')}</span></h2>
+              <Link to="/shop?badge=Best-seller" className="view-all">{t('Voir tout →','شوف الكل →')}</Link>
             </div>
             <div className="grid-4">
               {bestSellers.map(p => <ProductCard key={p.id} product={p} />)}
@@ -177,7 +177,7 @@ export default function Home() {
         <section className="section section--dark">
           <div className="container">
             <div className="section__header">
-              <h2 className="section__title" style={{color:'#fff'}}>{t('Nos','دروسنا')} <span style={{color:'var(--gold)'}}>{t('Tutoriels Beauté','التجميلية')}</span></h2>
+              <h2 className="section__title" style={{color:'#fff'}}>{t('Nos','دروس')} <span style={{color:'var(--gold)'}}>{t('Tutoriels Beauté','التجميل')}</span></h2>
             </div>
             <div className="grid-3">
               {videos.slice(0,3).map(v => (
@@ -201,7 +201,7 @@ export default function Home() {
           <div className="container">
             <div className="section__header">
               <h2 className="section__title">{t('Actualités &','أخبار')} <span>{t('Publications','ومنشورات')}</span></h2>
-              <Link to="/news" className="view-all">{t('Voir tout →','عرض الكل →')}</Link>
+              <Link to="/news" className="view-all">{t('Voir tout →','شوف الكل →')}</Link>
             </div>
             <div className="grid-3">
               {news.slice(0,3).map(n => (
@@ -211,7 +211,7 @@ export default function Home() {
                     <div className="news-card__meta">📅 {n.created_at?.split('T')[0]} · <span className="badge-forest">{n.category}</span></div>
                     <h3 className="news-card__title">{lang==='ar'?n.title_ar:n.title_fr}</h3>
                     <p className="news-card__excerpt">{lang==='ar'?n.excerpt_ar:n.excerpt_fr}</p>
-                    <Link to="/news" className="news-card__read">{t('Lire la suite →','اقرأ المزيد →')}</Link>
+                    <Link to="/news" className="news-card__read">{t('Lire la suite →','اقرأ الكل →')}</Link>
                   </div>
                 </div>
               ))}
@@ -220,14 +220,34 @@ export default function Home() {
         </section>
       )}
 
+      {/* ── NEWSLETTER ── */}
+      <div className="newsletter">
+        <div className="newsletter__inner">
+          <div>
+            <h3>{t('Reste au courant de nos offres','ابقى قريب من عروضنا')}</h3>
+            <p>{t('Inscris-toi et reçois nos nouveautés et promos en avant-première.','سجّل بريدك الإلكتروني وكن أول من يعرف بالمنتوجات الجديدة والتخفيضات.')}</p>
+          </div>
+          <div className="newsletter__form">
+            <input
+              type="email"
+              placeholder={t('Votre email','بريدك الإلكتروني')}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+            <button className="btn btn--primary" onClick={handleSubscribe}>{t('S\'abonner','اشترك الآن')}</button>
+          </div>
+          {subMsg && <p style={{width:'100%',marginTop:'10px',fontSize:'.85rem',color:'var(--forest)'}}>{subMsg}</p>}
+        </div>
+      </div>
+
       {/* ── ABOUT ── */}
       <section className="section section--blush" id="about">
   <div className="container about-grid">
     <div>
       <div className="hero__eyebrow" style={{marginBottom:'16px'}}>🌿 {t('Notre Histoire','قصتنا')}</div>
       <h2 className="section__title" style={{marginBottom:'16px'}}>{t('Haji Cosmétique,','حاجي كوزمتيك،')}<br/><span>{t('la beauté tunisienne','جمال تونسي أصيل')}</span></h2>
-      <p style={{color:'var(--mid)',lineHeight:1.8,marginBottom:'14px'}}>{t('Fondée à Mareth, Haji Cosmétique est née de la passion pour les ingrédients naturels tunisiens — argile, huile d\'olive, rosa damascena.','تأسست في مارث، نشأت حاجي كوزمتيك من الشغف بالمكونات الطبيعية التونسية — الطين، زيت الزيتون، ورد الدمشق.')}</p>
-      <p style={{color:'var(--mid)',lineHeight:1.8,marginBottom:'28px'}}>{t('Nous livrons dans les 24 gouvernorats tunisiens avec des produits testés dermatologiquement.','نوصل لجميع الولايات الـ24 التونسية بمنتجات مختبرة طبيًا.')}</p>
+      <p style={{color:'var(--mid)',lineHeight:1.8,marginBottom:'14px'}}>{t('Fondée à Mareth, Haji Cosmétique est née de la passion pour les ingrédients naturels tunisiens — argile, huile d\'olive, rosa damascena.','حاجي كوزمتيك تولدت في مارث، من عشقنا للمكونات الطبيعية التونسية — الطين، زيت الزيتون، وورد الجوري.')}</p>
+      <p style={{color:'var(--mid)',lineHeight:1.8,marginBottom:'28px'}}>{t('Nous livrons dans les 24 gouvernorats tunisiens avec des produits testés dermatologiquement.','نوصّلو لكل ولايات تونس الـ24، ومنتوجاتنا كلها مجربة ومتحقق منها طبيًا.')}</p>
       <Link to="/about" className="btn btn--primary">{t('En savoir plus →','اعرف أكثر →')}</Link>
     </div>
     <div className="about-grid__visual">
