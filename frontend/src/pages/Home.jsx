@@ -14,7 +14,7 @@ const CATEGORIES = [
   { id:'Maquillage',emoji:'💄', fr:'Maquillage',ar:'المكياج', count:98  },
   { id:'Parfum',    emoji:'🌸', fr:'Parfum',    ar:'العطور',  count:42  },
   { id:'Soins',     emoji:'✨', fr:'Soins',     ar:'العناية', count:55  },
-  { id:'accessoire', emoji:'🎀', fr:'Accessoires', ar:'الإكسسوارات', count:30 }
+  { id:'Accessoire', emoji:'🎀', fr:'Accessoires', ar:'الإكسسوارات', count:30 }
 ];
 
 

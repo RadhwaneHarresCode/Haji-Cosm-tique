@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard';
 import './Shop.css';
 
 const API = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-const CATS = ['all','Visage','Corps','Cheveux','Maquillage','Parfum'];
+const CATS = ['all','Visage','Corps','Cheveux','Maquillage','Parfum','Soins','Accessoire'];
 
 export default function Shop() {
   const { t, lang }         = useLang();
