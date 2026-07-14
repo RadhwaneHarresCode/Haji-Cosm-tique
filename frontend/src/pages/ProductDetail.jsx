@@ -83,7 +83,7 @@ export default function ProductDetail() {
               <span>{qty}</span>
               <button onClick={() => setQty(q => q+1)}>+</button>
             </div>
-            <span className="pd__stock">✅ {t(`En stock (${product.stock})`,'متوفر')}</span>
+            <span className="pd__stock">✅ {t('En stock','متوفر')}</span>
           </div>
 
           <div className="pd__actions">
